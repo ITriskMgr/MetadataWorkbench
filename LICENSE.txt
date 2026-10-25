@@ -1,0 +1,50 @@
+Metadata Workbench — Licence / Licence d'utilisation
+Copyright (c) 2026 Marc-André Léger. All rights reserved. Tous droits réservés.
+
+ENGLISH
+
+1. Free use. You may download, install and use Metadata Workbench free of charge, for any lawful
+   purpose, on computers you own or control.
+2. No redistribution or modification. You may not sell, rent, sublicense or redistribute the
+   application, and you may not modify, decompile or disassemble it, except to the extent the law
+   or a third-party component's licence expressly allows it. Please share the official download page
+   (https://www.leger.ca/metadata-workbench/) instead of copies of the installer.
+3. As-is, no warranty. The application is provided "AS IS", without warranty of any kind, express or
+   implied, including fitness for a particular purpose and non-infringement. It is a technical tool:
+   its results are observations for review, not legal, forensic or expert conclusions, and you remain
+   responsible for how you use it and for keeping your own copies of your files.
+4. Limitation of liability. To the maximum extent permitted by law, the author is not liable for any
+   damages arising from the use of, or inability to use, the application, including loss of data.
+5. Third-party components. The application includes components under their own licences (Qt for
+   Python/PySide6 — LGPLv3; ExifTool — Artistic License or GPL; LibRaw — LGPL-2.1 or CDDL; lxml,
+   pikepdf/qpdf, rawpy, NumPy, Pillow, puremagic — permissive licences). Those licences apply to those
+   components and are not restricted by this licence; see NOTICE.txt and THIRD_PARTY_LICENSES.md in the
+   application. The bundled ExifTool is unmodified except for its first line, which is changed to use
+   the system Perl (/usr/bin/perl).
+6. Privacy. The application works offline. It sends no data, telemetry or usage statistics anywhere.
+
+FRANÇAIS
+
+1. Utilisation gratuite. Vous pouvez télécharger, installer et utiliser Metadata Workbench
+   gratuitement, à toute fin légale, sur des ordinateurs qui vous appartiennent ou que vous contrôlez.
+2. Aucune redistribution ni modification. Il est interdit de vendre, louer, concéder en sous-licence
+   ou redistribuer l'application, ainsi que de la modifier, la décompiler ou la désassembler, sauf dans
+   la mesure où la loi ou la licence d'un composant tiers le permet expressément. Partagez plutôt la
+   page officielle de téléchargement (https://www.leger.ca/metadata-workbench/) que des copies du
+   programme d'installation.
+3. Tel quel, sans garantie. L'application est fournie « TELLE QUELLE », sans garantie d'aucune sorte,
+   expresse ou implicite, notamment quant à son adéquation à un usage particulier ou à l'absence de
+   contrefaçon. C'est un outil technique : ses résultats sont des observations à examiner, non des
+   conclusions juridiques, forensiques ou d'expert; vous demeurez responsable de l'usage que vous en
+   faites et de la conservation de vos propres copies de fichiers.
+4. Limitation de responsabilité. Dans toute la mesure permise par la loi, l'auteur n'est responsable
+   d'aucun dommage découlant de l'utilisation ou de l'impossibilité d'utiliser l'application, y compris
+   la perte de données.
+5. Composants tiers. L'application comprend des composants régis par leurs propres licences (Qt for
+   Python/PySide6 — LGPLv3; ExifTool — Artistic License ou GPL; LibRaw — LGPL-2.1 ou CDDL; lxml,
+   pikepdf/qpdf, rawpy, NumPy, Pillow, puremagic — licences permissives). Ces licences s'appliquent à ces
+   composants et ne sont pas restreintes par la présente licence; voir NOTICE.txt et
+   THIRD_PARTY_LICENSES.md dans l'application. L'ExifTool inclus n'est pas modifié, sauf sa première
+   ligne, changée pour utiliser le Perl du système (/usr/bin/perl).
+6. Confidentialité. L'application fonctionne hors ligne. Elle n'envoie aucune donnée, télémétrie ni
+   statistique d'utilisation.
