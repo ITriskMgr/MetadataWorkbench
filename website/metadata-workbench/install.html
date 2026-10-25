@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install Metadata Workbench</title>
+<meta name="title-en" content="Install Metadata Workbench">
+<meta name="title-fr" content="Installer Metadata Workbench">
+<meta name="description" content="How to download, verify, install and open Metadata Workbench on macOS. / Comment télécharger, vérifier, installer et ouvrir Metadata Workbench sur macOS.">
+<link rel="stylesheet" href="mw.css">
+<script src="mw.js"></script>
+</head>
+<body>
+<header class="top"><div class="bar">
+  <a class="home" href="/">Marc-André Léger</a>
+  <nav>
+    <a href="./" data-keep-lang><span data-lang="en">Overview</span><span data-lang="fr">Aperçu</span></a>
+    <a href="install.html" aria-current="page" data-keep-lang><span data-lang="en">Install</span><span data-lang="fr">Installation</span></a>
+    <a href="guide.html" data-keep-lang><span data-lang="en">User guide</span><span data-lang="fr">Guide d'utilisation</span></a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language / Langue">
+    <button type="button" data-set="fr" aria-pressed="false">FR</button><button type="button" data-set="en" aria-pressed="true">EN</button>
+  </div>
+</div></header>
+
+<main>
+<div data-lang="en">
+<h1>Installing Metadata Workbench</h1>
+<p class="small">Version 0.5.0 · about 10 minutes · <a href="MetadataWorkbench-Install-EN-FR.pdf">PDF (English and French)</a></p>
+
+<h2>Requirements</h2>
+<ul>
+  <li>A Mac with Apple silicon (M1, M2, M3, M4 or later). Intel Macs are not supported.</li>
+  <li>macOS 15 Sequoia or later.</li>
+  <li>About 500 MB of free disk space, plus room for your projects (each file you add is copied into its project).</li>
+  <li>Optional: <a href="#ffmpeg">ffmpeg</a> to inspect and edit audio and video files.</li>
+</ul>
+
+<h2>1. Download</h2>
+<ol class="steps">
+  <li><a href="https://github.com/ITriskMgr/MetadataWorkbench/releases/latest/download/MetadataWorkbench-macOS.dmg">Download
+    <code>MetadataWorkbench-macOS.dmg</code></a> from the official release page on GitHub. Avoid copies from anywhere else.</li>
+  <li><strong>Optional but recommended — check the file.</strong> Open <em>Terminal</em> (Applications ▸ Utilities) and run:
+    <pre><code>shasum -a 256 ~/Downloads/MetadataWorkbench-macOS.dmg</code></pre>
+    Compare the result with the SHA-256 shown on the
+    <a href="https://github.com/ITriskMgr/MetadataWorkbench/releases/latest">release page</a> (file
+    <code>MetadataWorkbench-macOS.dmg.sha256</code>). They must be identical. If they differ, delete the download and
+    try again.</li>
+</ol>
+
+<h2>2. Install</h2>
+<ol class="steps">
+  <li>Double-click the downloaded <code>.dmg</code>. A window opens with <strong>Metadata Workbench</strong>, an
+    <strong>Applications</strong> shortcut, the licence and this guide as a PDF.</li>
+  <li>Drag <strong>Metadata Workbench</strong> onto <strong>Applications</strong>.</li>
+  <li>Eject the disk image (the eject button next to it in the Finder sidebar). You can delete the <code>.dmg</code>.</li>
+</ol>
+
+<h2>3. Open it the first time</h2>
+<div class="note">The app is free and is not distributed through the App Store or signed with a paid Apple Developer ID,
+  so macOS asks you to confirm it once. This is expected. You only need to do it the first time (and again after
+  installing a new version).</div>
+<ol class="steps">
+  <li>Open <strong>Applications</strong> and double-click <strong>Metadata Workbench</strong>. macOS shows a message
+    saying it “cannot verify” the app or that it was “not opened”. Click <strong>Done</strong> (or <strong>OK</strong>) —
+    do <em>not</em> move it to the Trash.</li>
+  <li>Open <strong>System Settings ▸ Privacy &amp; Security</strong>. Scroll down to the <em>Security</em> section: you will
+    see “Metadata Workbench was blocked…”. Click <strong>Open Anyway</strong>.</li>
+  <li>Confirm with <strong>Open Anyway</strong> again and enter your Mac password (or use Touch ID). The app opens. From
+    now on it opens normally.</li>
+</ol>
+<p><strong>Alternative (Terminal).</strong> If you prefer, this single command removes the download quarantine flag
+  from the app, after which it opens normally:</p>
+<pre><code>xattr -dr com.apple.quarantine "/Applications/Metadata Workbench.app"</code></pre>
+
+<h2>4. Check the installation</h2>
+<ol class="steps">
+  <li>In the app, choose <strong>Help ▾ ▸ Run self-test (offline)…</strong>. It runs about a dozen checks in under a
+    minute without using the network: bundled tools, isolation of file parsers, editing and verification. All checks
+    should say <em>PASS</em>.</li>
+  <li>Choose <strong>Help ▾ ▸ About Metadata Workbench…</strong> to see the version, the licence and the third-party
+    notices.</li>
+</ol>
+
+<h2 id="ffmpeg">5. Optional: audio and video (ffmpeg)</h2>
+<p>Photos, RAW files, Office documents and PDFs work right away. To inspect and edit audio and video (MP4, MOV, MP3,
+  FLAC, MKV…), install the free <em>ffmpeg</em> tools with <a href="https://brew.sh">Homebrew</a>:</p>
+<ol class="steps">
+  <li>If you do not have Homebrew yet, install it by following the one-line instructions on <a href="https://brew.sh">brew.sh</a>.</li>
+  <li>In Terminal, run <pre><code>brew install ffmpeg</code></pre></li>
+  <li>Restart Metadata Workbench. The self-test now also reports ffmpeg as available.</li>
+</ol>
+
+<h2>6. Access to your folders</h2>
+<p>The first time you add files from <em>Desktop</em>, <em>Documents</em>, <em>Downloads</em>, an external drive or a
+  network volume, macOS asks whether Metadata Workbench may access that location. Click <strong>Allow</strong>. You can
+  review this later in <strong>System Settings ▸ Privacy &amp; Security ▸ Files and Folders</strong>.</p>
+<p>The app only <em>reads</em> your original files. It copies each one into the project and works on that copy.</p>
+
+<h2>Where your data is kept</h2>
+<ul>
+  <li>Projects are saved by default in <code>~/MetadataWorkbench/projects/</code> (in your home folder). Each project is
+    a folder containing a database, the verified copies of your files, edited copies and exports.</li>
+  <li>Projects are not encrypted by the app. Keep FileVault turned on (System Settings ▸ Privacy &amp; Security ▸ FileVault),
+    especially for sensitive material.</li>
+  <li>The app works offline and sends nothing anywhere.</li>
+</ul>
+
+<h2>Updating</h2>
+<p>Download the new <code>.dmg</code>, quit the app, drag the new version onto <strong>Applications</strong> and choose
+  <strong>Replace</strong>. Repeat step 3 (Open Anyway) once. Your projects are not affected; a project opened with a newer
+  version is upgraded automatically (a backup is kept in the project's <code>backups/</code> folder).</p>
+
+<h2>Uninstalling</h2>
+<ol class="steps">
+  <li>Drag <strong>Metadata Workbench</strong> from Applications to the Trash.</li>
+  <li>Optional: delete <code>~/MetadataWorkbench/</code> to remove all your projects (this cannot be undone — keep anything
+    you need first) and the settings file in <code>~/Library/Preferences/</code> whose name ends in <code>MetadataWorkbench.plist</code>.</li>
+</ol>
+
+<h2>Command-line tool (advanced)</h2>
+<p>The app includes a command-line tool for scripting and batch work:</p>
+<pre><code>"/Applications/Metadata Workbench.app/Contents/MacOS/MetadataWorkbench" --cli doctor</code></pre>
+<p>To shorten it, add this line to <code>~/.zshrc</code> and open a new Terminal window:</p>
+<pre><code>alias mwb='"/Applications/Metadata Workbench.app/Contents/MacOS/MetadataWorkbench" --cli'</code></pre>
+<p>Then <code>mwb --help</code> lists every command (inspect, report, plan, apply, verify, diff, selftest…).</p>
+
+<h2>Troubleshooting</h2>
+<table>
+  <tr><th>Problem</th><th>What to do</th></tr>
+  <tr><td>“Metadata Workbench is damaged and can't be opened”</td><td>The download was quarantined in a way the
+    Open Anyway button does not fix. Use the <code>xattr</code> command in step 3, then open the app again. If it
+    persists, check the SHA-256 (step 1) and download again.</td></tr>
+  <tr><td>No “Open Anyway” button</td><td>Try opening the app once first (step 3.1); the button appears for about an
+    hour afterwards. Or use the <code>xattr</code> command.</td></tr>
+  <tr><td>“You can't use this version with this version of macOS”</td><td>macOS 15 or later is required.</td></tr>
+  <tr><td>The app does not start on an Intel Mac</td><td>Only Apple silicon Macs are supported.</td></tr>
+  <tr><td>Audio/video files are read-only or show “ffmpeg not found”</td><td>Install ffmpeg (section 5) and restart
+    the app.</td></tr>
+  <tr><td>A file is marked <em>unstable</em></td><td>It changed while being read (still syncing from iCloud/OneDrive, or
+    still being saved). Wait until it is fully downloaded and closed, then add it again.</td></tr>
+  <tr><td>A self-test check fails</td><td>Note which check failed and the message, then report it through the
+    <a href="https://github.com/ITriskMgr/MetadataWorkbench/issues">GitHub issues page</a>.</td></tr>
+</table>
+
+<p><a href="guide.html" data-keep-lang>Next: the user guide →</a></p>
+</div>
+
+<div data-lang="fr">
+<h1>Installer Metadata Workbench</h1>
+<p class="small">Version 0.5.0 · environ 10 minutes · <a href="MetadataWorkbench-Install-EN-FR.pdf">PDF (français et anglais)</a></p>
+
+<h2>Configuration requise</h2>
+<ul>
+  <li>Un Mac avec puce Apple (M1, M2, M3, M4 ou plus récent). Les Mac Intel ne sont pas pris en charge.</li>
+  <li>macOS 15 Sequoia ou plus récent.</li>
+  <li>Environ 500 Mo d'espace libre, plus l'espace pour vos projets (chaque fichier ajouté est copié dans son projet).</li>
+  <li>Facultatif : <a href="#ffmpeg-fr">ffmpeg</a> pour inspecter et éditer les fichiers audio et vidéo.</li>
+</ul>
+
+<h2>1. Télécharger</h2>
+<ol class="steps">
+  <li><a href="https://github.com/ITriskMgr/MetadataWorkbench/releases/latest/download/MetadataWorkbench-macOS.dmg">Téléchargez
+    <code>MetadataWorkbench-macOS.dmg</code></a> à partir de la page officielle des versions sur GitHub. Évitez les copies
+    provenant d'ailleurs.</li>
+  <li><strong>Facultatif mais recommandé — vérifiez le fichier.</strong> Ouvrez le <em>Terminal</em> (Applications ▸
+    Utilitaires) et exécutez :
+    <pre><code>shasum -a 256 ~/Downloads/MetadataWorkbench-macOS.dmg</code></pre>
+    Comparez le résultat avec le SHA-256 affiché sur la
+    <a href="https://github.com/ITriskMgr/MetadataWorkbench/releases/latest">page de la version</a> (fichier
+    <code>MetadataWorkbench-macOS.dmg.sha256</code>). Ils doivent être identiques. S'ils diffèrent, supprimez le
+    téléchargement et recommencez.</li>
+</ol>
+
+<h2>2. Installer</h2>
+<ol class="steps">
+  <li>Double-cliquez sur le <code>.dmg</code> téléchargé. Une fenêtre s'ouvre avec <strong>Metadata Workbench</strong>, un
+    raccourci <strong>Applications</strong>, la licence et ce guide en PDF.</li>
+  <li>Glissez <strong>Metadata Workbench</strong> sur <strong>Applications</strong>.</li>
+  <li>Éjectez l'image disque (bouton d'éjection à côté de son nom dans la barre latérale du Finder). Vous pouvez supprimer
+    le <code>.dmg</code>.</li>
+</ol>
+
+<h2>3. L'ouvrir la première fois</h2>
+<div class="note">L'application est gratuite; elle n'est pas distribuée par l'App Store ni signée avec un identifiant de
+  développeur Apple payant. macOS vous demande donc de la confirmer une fois. C'est normal. Il suffit de le faire la
+  première fois (et de nouveau après l'installation d'une nouvelle version).</div>
+<ol class="steps">
+  <li>Ouvrez <strong>Applications</strong> et double-cliquez sur <strong>Metadata Workbench</strong>. macOS affiche un
+    message indiquant qu'il « ne peut pas vérifier » l'application ou qu'elle « n'a pas été ouverte ». Cliquez sur
+    <strong>Terminé</strong> (ou <strong>OK</strong>) — ne la placez <em>pas</em> dans la corbeille.</li>
+  <li>Ouvrez <strong>Réglages Système ▸ Confidentialité et sécurité</strong>. Descendez jusqu'à la section
+    <em>Sécurité</em> : vous verrez « Metadata Workbench a été bloqué… ». Cliquez sur <strong>Ouvrir quand même</strong>.</li>
+  <li>Confirmez de nouveau avec <strong>Ouvrir quand même</strong> et saisissez le mot de passe de votre Mac (ou utilisez
+    Touch ID). L'application s'ouvre. Par la suite, elle s'ouvrira normalement.</li>
+</ol>
+<p><strong>Autre méthode (Terminal).</strong> Si vous préférez, cette commande unique retire de l'application
+  l'attribut de quarantaine du téléchargement; elle s'ouvre ensuite normalement :</p>
+<pre><code>xattr -dr com.apple.quarantine "/Applications/Metadata Workbench.app"</code></pre>
+
+<h2>4. Vérifier l'installation</h2>
+<ol class="steps">
+  <li>Dans l'application, choisissez <strong>Help ▾ ▸ Run self-test (offline)…</strong> (autotest hors ligne). Il effectue
+    une douzaine de vérifications en moins d'une minute, sans utiliser le réseau : outils inclus, isolement des
+    analyseurs, édition et vérification. Toutes doivent indiquer <em>PASS</em>.</li>
+  <li>Choisissez <strong>Help ▾ ▸ About Metadata Workbench…</strong> pour voir la version, la licence et les avis
+    relatifs aux composants tiers.</li>
+</ol>
+<p class="small">L'interface de l'application est en anglais; les libellés sont donc indiqués en anglais dans ce guide.</p>
+
+<h2 id="ffmpeg-fr">5. Facultatif : audio et vidéo (ffmpeg)</h2>
+<p>Les photos, les fichiers RAW, les documents Office et les PDF fonctionnent tout de suite. Pour inspecter et éditer
+  l'audio et la vidéo (MP4, MOV, MP3, FLAC, MKV…), installez les outils gratuits <em>ffmpeg</em> avec
+  <a href="https://brew.sh">Homebrew</a> :</p>
+<ol class="steps">
+  <li>Si vous n'avez pas encore Homebrew, installez-le en suivant l'instruction d'une ligne sur <a href="https://brew.sh">brew.sh</a>.</li>
+  <li>Dans le Terminal, exécutez <pre><code>brew install ffmpeg</code></pre></li>
+  <li>Redémarrez Metadata Workbench. L'autotest indique maintenant que ffmpeg est disponible.</li>
+</ol>
+
+<h2>6. Accès à vos dossiers</h2>
+<p>La première fois que vous ajoutez des fichiers provenant du <em>Bureau</em>, de <em>Documents</em>, de
+  <em>Téléchargements</em>, d'un disque externe ou d'un volume réseau, macOS demande si Metadata Workbench peut accéder à
+  cet emplacement. Cliquez sur <strong>Autoriser</strong>. Vous pouvez revoir ce choix dans <strong>Réglages Système ▸
+  Confidentialité et sécurité ▸ Fichiers et dossiers</strong>.</p>
+<p>L'application ne fait que <em>lire</em> vos fichiers originaux. Elle copie chacun d'eux dans le projet et travaille
+  sur cette copie.</p>
+
+<h2>Où vos données sont conservées</h2>
+<ul>
+  <li>Par défaut, les projets sont enregistrés dans <code>~/MetadataWorkbench/projects/</code> (dans votre dossier
+    personnel). Chaque projet est un dossier contenant une base de données, les copies vérifiées de vos fichiers, les
+    copies modifiées et les exportations.</li>
+  <li>L'application ne chiffre pas les projets. Gardez FileVault activé (Réglages Système ▸ Confidentialité et sécurité ▸
+    FileVault), surtout pour du contenu sensible.</li>
+  <li>L'application fonctionne hors ligne et n'envoie rien nulle part.</li>
+</ul>
+
+<h2>Mettre à jour</h2>
+<p>Téléchargez le nouveau <code>.dmg</code>, quittez l'application, glissez la nouvelle version sur
+  <strong>Applications</strong> et choisissez <strong>Remplacer</strong>. Refaites l'étape 3 (Ouvrir quand même) une fois.
+  Vos projets ne sont pas touchés; un projet ouvert avec une version plus récente est mis à niveau automatiquement (une
+  sauvegarde est conservée dans le dossier <code>backups/</code> du projet).</p>
+
+<h2>Désinstaller</h2>
+<ol class="steps">
+  <li>Glissez <strong>Metadata Workbench</strong> d'Applications vers la corbeille.</li>
+  <li>Facultatif : supprimez <code>~/MetadataWorkbench/</code> pour retirer tous vos projets (irréversible — conservez
+    d'abord ce dont vous avez besoin) et, pour les réglages, le fichier de <code>~/Library/Preferences/</code> dont le nom se termine par
+    <code>MetadataWorkbench.plist</code>.</li>
+</ol>
+
+<h2>Outil en ligne de commande (avancé)</h2>
+<p>L'application comprend un outil en ligne de commande pour les scripts et le traitement par lots :</p>
+<pre><code>"/Applications/Metadata Workbench.app/Contents/MacOS/MetadataWorkbench" --cli doctor</code></pre>
+<p>Pour l'abréger, ajoutez cette ligne à <code>~/.zshrc</code> et ouvrez une nouvelle fenêtre de Terminal :</p>
+<pre><code>alias mwb='"/Applications/Metadata Workbench.app/Contents/MacOS/MetadataWorkbench" --cli'</code></pre>
+<p>Ensuite, <code>mwb --help</code> énumère toutes les commandes (inspect, report, plan, apply, verify, diff, selftest…).</p>
+
+<h2>Dépannage</h2>
+<table>
+  <tr><th>Problème</th><th>Que faire</th></tr>
+  <tr><td>« Metadata Workbench est endommagé et ne peut pas être ouvert »</td><td>Le téléchargement a été mis en
+    quarantaine d'une façon que le bouton Ouvrir quand même ne règle pas. Utilisez la commande <code>xattr</code> de
+    l'étape 3, puis rouvrez l'application. Si le problème persiste, vérifiez le SHA-256 (étape 1) et téléchargez de
+    nouveau.</td></tr>
+  <tr><td>Aucun bouton « Ouvrir quand même »</td><td>Essayez d'abord d'ouvrir l'application une fois (étape 3.1); le
+    bouton apparaît ensuite pendant environ une heure. Ou utilisez la commande <code>xattr</code>.</td></tr>
+  <tr><td>« Vous ne pouvez pas utiliser cette version avec cette version de macOS »</td><td>macOS 15 ou plus récent est
+    requis.</td></tr>
+  <tr><td>L'application ne démarre pas sur un Mac Intel</td><td>Seuls les Mac avec puce Apple sont pris en charge.</td></tr>
+  <tr><td>Les fichiers audio/vidéo sont en lecture seule ou « ffmpeg not found » s'affiche</td><td>Installez ffmpeg
+    (section 5) et redémarrez l'application.</td></tr>
+  <tr><td>Un fichier est marqué <em>unstable</em> (instable)</td><td>Il a changé pendant sa lecture (synchronisation
+    iCloud/OneDrive en cours, ou enregistrement non terminé). Attendez qu'il soit entièrement téléchargé et fermé, puis
+    ajoutez-le de nouveau.</td></tr>
+  <tr><td>Une vérification de l'autotest échoue</td><td>Notez la vérification en cause et le message, puis signalez-le
+    sur la <a href="https://github.com/ITriskMgr/MetadataWorkbench/issues">page des problèmes GitHub</a>.</td></tr>
+</table>
+
+<p><a href="guide.html" data-keep-lang>Suite : le guide d'utilisation →</a></p>
+</div>
+</main>
+
+<footer><div class="bar">
+  <span>© 2026 Marc-André Léger · <a href="/">leger.ca</a></span>
+  <span><a href="https://github.com/ITriskMgr/MetadataWorkbench">GitHub</a></span>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metadata Workbench — Marc-André Léger</title>
+<meta name="title-en" content="Metadata Workbench — Marc-André Léger">
+<meta name="title-fr" content="Metadata Workbench — Marc-André Léger">
+<meta name="description" content="Metadata Workbench: a free macOS tool to inspect, compare, verify and safely edit file metadata — for cybersecurity, digital forensics and data governance. / Outil gratuit pour macOS d'inspection, de comparaison, de vérification et d'édition sécuritaire des métadonnées de fichiers.">
+<meta property="og:title" content="Metadata Workbench">
+<meta property="og:description" content="Inspect, compare, verify and safely edit file metadata on macOS. Free. / Inspecter, comparer, vérifier et éditer les métadonnées de fichiers sur macOS. Gratuit.">
+<meta property="og:image" content="https://www.leger.ca/metadata-workbench/img/edit.png">
+<meta property="og:url" content="https://www.leger.ca/metadata-workbench/">
+<link rel="stylesheet" href="mw.css">
+<script src="mw.js"></script>
+</head>
+<body>
+<header class="top"><div class="bar">
+  <a class="home" href="/">Marc-André Léger</a>
+  <nav>
+    <a href="./" aria-current="page" data-keep-lang><span data-lang="en">Overview</span><span data-lang="fr">Aperçu</span></a>
+    <a href="install.html" data-keep-lang><span data-lang="en">Install</span><span data-lang="fr">Installation</span></a>
+    <a href="guide.html" data-keep-lang><span data-lang="en">User guide</span><span data-lang="fr">Guide d'utilisation</span></a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language / Langue">
+    <button type="button" data-set="fr" aria-pressed="false">FR</button><button type="button" data-set="en" aria-pressed="true">EN</button>
+  </div>
+</div></header>
+
+<main>
+<section class="hero">
+  <div>
+    <h1>Metadata Workbench</h1>
+    <p class="lead" data-lang="en">Inspect, compare, verify and safely edit the hidden data inside your files — for cybersecurity,
+      digital forensics, data governance and privacy clean-up. Free for macOS.</p>
+    <p class="lead" data-lang="fr">Inspecter, comparer, vérifier et éditer de façon sécuritaire les données cachées de vos
+      fichiers — pour la cybersécurité, la forensique numérique, la gouvernance des données et le nettoyage avant
+      partage. Gratuit pour macOS.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/ITriskMgr/MetadataWorkbench/releases/latest/download/MetadataWorkbench-macOS.dmg">
+        <span data-lang="en">Download for Mac</span><span data-lang="fr">Télécharger pour Mac</span></a>
+      <a class="btn secondary" href="install.html" data-keep-lang><span data-lang="en">How to install</span><span data-lang="fr">Comment l'installer</span></a>
+    </div>
+    <p class="small" data-lang="en">Version 0.5.0 · Mac with Apple silicon (M1 or later) · macOS 15 Sequoia or later · about 200 MB ·
+      <a href="https://github.com/ITriskMgr/MetadataWorkbench/releases/latest">release notes and SHA-256 checksum</a></p>
+    <p class="small" data-lang="fr">Version 0.5.0 · Mac avec puce Apple (M1 ou plus récent) · macOS 15 Sequoia ou plus récent ·
+      environ 200 Mo · <a href="https://github.com/ITriskMgr/MetadataWorkbench/releases/latest">notes de version et
+      somme de contrôle SHA-256</a></p>
+  </div>
+  <figure>
+    <img src="img/edit.png" width="1233" height="846" alt="Metadata Workbench: reviewing a privacy clean-up plan for a photo before creating an edited copy">
+  </figure>
+</section>
+
+<div data-lang="en">
+<h2>What it does</h2>
+<div class="grid">
+  <div class="card"><h3>See everything</h3><p>EXIF, XMP, IPTC, GPS, Office properties, comments and tracked changes, PDF
+    revisions and scripts, audio/video tags, archive contents — each value with where it was found, alongside a hex
+    view of the file.</p></div>
+  <div class="card"><h3>Never touch the original</h3><p>Every file is copied into your project and verified by its SHA-256.
+    All viewing and editing work on that copy. Edits always create a new, separate file.</p></div>
+  <div class="card"><h3>Edit with proof</h3><p>Change or remove titles, authors, GPS (remove or round only), device serial
+    numbers, comments, tracked changes, PDF scripts and more. Each edited copy is re-read and checked: the picture,
+    sound, pages or document text are proven unchanged.</p></div>
+  <div class="card"><h3>Verify integrity</h3><p>Files are re-checked when opened: working copy, original, checksum files
+    (<code>.sha256</code>, <code>.md5</code>) and your checksum manifests. Exports can write new checksum files and update
+    manifests, including BagIt bags.</p></div>
+  <div class="card"><h3>Compare versions</h3><p>A version report flags every change between two versions: checksums,
+    changed byte ranges, metadata added or removed, and whether the actual content changed — as HTML or JSON.</p></div>
+  <div class="card"><h3>Analyse</h3><p>Findings for review (time inconsistencies, conflicting values, privacy exposure,
+    active content such as macros or PDF JavaScript), a timeline with explicit time-zone assumptions, and an audit log.</p></div>
+</div>
+
+<h2>Formats</h2>
+<table>
+  <tr><th>Family</th><th>Inspect</th><th>Edit (new copy)</th></tr>
+  <tr><td>Images</td><td>JPEG, PNG, TIFF, HEIC, WebP and more</td><td>JPEG, PNG, TIFF</td></tr>
+  <tr><td>Camera RAW</td><td>All formats ExifTool reads</td><td>DNG (Apple ProRAW, DJI, Leica, Ricoh, Pentax, Samsung, Sigma);
+    Canon CR3/CR2/CRW, Nikon NEF/NRW, Sony ARW, Fujifilm RAF, Panasonic RW2, OM System ORF, Pentax PEF, Leica RWL — after a
+    one-time validation per camera model</td></tr>
+  <tr><td>Documents</td><td>Word, Excel, PowerPoint, PDF, archives</td><td>DOCX, XLSX, PPTX, PDF</td></tr>
+  <tr><td>Audio / video</td><td>MP4, MOV, M4A, MP3, FLAC, MKV, WAV and more</td><td>All of these (audio/video needs
+    <a href="install.html#ffmpeg" data-keep-lang>ffmpeg</a>)</td></tr>
+</table>
+<p class="small">Signed files and files with content credentials (C2PA) are read-only: editing them would break the signature.</p>
+
+<h2>Screenshots</h2>
+<figure><img src="img/compare.png" width="1233" height="846" loading="lazy" alt="Version report comparing a photo and its edited copy">
+  <figcaption>Version report: the edited copy differs in metadata only — the image itself is proven identical.</figcaption></figure>
+<figure><img src="img/structure.png" width="1233" height="846" loading="lazy" alt="Structure view of a Word document">
+  <figcaption>Structure of a Word document: properties, relationships (here a template path revealing a user name), comments and tracked changes.</figcaption></figure>
+<figure><img src="img/hex.png" width="1233" height="846" loading="lazy" alt="Hex view">
+  <figcaption>Hex view of the verified working copy, with search and byte editing on a new copy.</figcaption></figure>
+
+<h2>Safe by design</h2>
+<p>The application works entirely offline and sends nothing anywhere. File parsers run in separate processes with no
+  network access and can write only to their own temporary folders. It was tested with deliberately malformed and hostile
+  files. Results are observations for review, not legal or expert conclusions.</p>
+
+<h2>Documentation</h2>
+<ul>
+  <li><a href="install.html" data-keep-lang>Installation guide</a> — including the one-time "Open Anyway" step on first launch</li>
+  <li><a href="guide.html" data-keep-lang>User guide</a></li>
+  <li><a href="https://github.com/ITriskMgr/MetadataWorkbench/releases">All releases</a></li>
+</ul>
+
+<h2>Licence</h2>
+<p>Free to use, as-is, without warranty. You may not redistribute or modify the application — please share this page
+  instead. Third-party components keep their own licences. <a href="https://github.com/ITriskMgr/MetadataWorkbench/blob/main/LICENSE.txt">Full licence</a>.</p>
+</div>
+
+<div data-lang="fr">
+<h2>Ce que l'outil fait</h2>
+<div class="grid">
+  <div class="card"><h3>Tout voir</h3><p>EXIF, XMP, IPTC, GPS, propriétés Office, commentaires et modifications suivies,
+    révisions et scripts PDF, balises audio/vidéo, contenu des archives — chaque valeur avec l'endroit où elle a été
+    trouvée, accompagnée d'une vue hexadécimale du fichier.</p></div>
+  <div class="card"><h3>Ne jamais toucher l'original</h3><p>Chaque fichier est copié dans votre projet et vérifié par son
+    SHA-256. La consultation et l'édition se font sur cette copie. Une modification crée toujours un nouveau fichier
+    distinct.</p></div>
+  <div class="card"><h3>Éditer avec preuve</h3><p>Modifier ou retirer titres, auteurs, GPS (retrait ou arrondi seulement),
+    numéros de série d'appareils, commentaires, modifications suivies, scripts PDF, etc. Chaque copie modifiée est relue
+    et vérifiée : l'image, le son, les pages ou le texte du document sont démontrés inchangés.</p></div>
+  <div class="card"><h3>Vérifier l'intégrité</h3><p>Les fichiers sont revérifiés à l'ouverture : copie de travail, original,
+    fichiers de sommes de contrôle (<code>.sha256</code>, <code>.md5</code>) et vos manifestes. L'exportation peut écrire de
+    nouveaux fichiers de sommes de contrôle et mettre à jour les manifestes, y compris les sacs BagIt.</p></div>
+  <div class="card"><h3>Comparer des versions</h3><p>Un rapport de versions signale chaque différence entre deux versions :
+    sommes de contrôle, plages d'octets modifiées, métadonnées ajoutées ou retirées et changement réel du contenu — en
+    HTML ou JSON.</p></div>
+  <div class="card"><h3>Analyser</h3><p>Constats à examiner (incohérences temporelles, valeurs contradictoires, exposition
+    de renseignements personnels, contenu actif comme les macros ou le JavaScript PDF), chronologie avec hypothèses de
+    fuseau horaire explicites et journal d'audit.</p></div>
+</div>
+
+<h2>Formats</h2>
+<table>
+  <tr><th>Famille</th><th>Inspection</th><th>Édition (nouvelle copie)</th></tr>
+  <tr><td>Images</td><td>JPEG, PNG, TIFF, HEIC, WebP et autres</td><td>JPEG, PNG, TIFF</td></tr>
+  <tr><td>RAW d'appareil photo</td><td>Tous les formats lus par ExifTool</td><td>DNG (Apple ProRAW, DJI, Leica, Ricoh,
+    Pentax, Samsung, Sigma); Canon CR3/CR2/CRW, Nikon NEF/NRW, Sony ARW, Fujifilm RAF, Panasonic RW2, OM System ORF,
+    Pentax PEF, Leica RWL — après une validation unique par modèle d'appareil</td></tr>
+  <tr><td>Documents</td><td>Word, Excel, PowerPoint, PDF, archives</td><td>DOCX, XLSX, PPTX, PDF</td></tr>
+  <tr><td>Audio / vidéo</td><td>MP4, MOV, M4A, MP3, FLAC, MKV, WAV et autres</td><td>Tous ceux-ci (l'audio et la vidéo
+    nécessitent <a href="install.html#ffmpeg" data-keep-lang>ffmpeg</a>)</td></tr>
+</table>
+<p class="small">Les fichiers signés et ceux qui portent des attestations de contenu (C2PA) sont en lecture seule : les
+  modifier briserait la signature.</p>
+
+<h2>Captures d'écran</h2>
+<p class="small">L'interface de l'application est en anglais.</p>
+<figure><img src="img/compare.png" width="1233" height="846" loading="lazy" alt="Rapport de versions comparant une photo et sa copie modifiée">
+  <figcaption>Rapport de versions : la copie modifiée ne diffère que par ses métadonnées — l'image elle-même est démontrée identique.</figcaption></figure>
+<figure><img src="img/structure.png" width="1233" height="846" loading="lazy" alt="Vue Structure d'un document Word">
+  <figcaption>Structure d'un document Word : propriétés, relations (ici un chemin de modèle révélant un nom d'utilisateur), commentaires et modifications suivies.</figcaption></figure>
+<figure><img src="img/hex.png" width="1233" height="846" loading="lazy" alt="Vue hexadécimale">
+  <figcaption>Vue hexadécimale de la copie de travail vérifiée, avec recherche et édition d'octets sur une nouvelle copie.</figcaption></figure>
+
+<h2>Sécuritaire dès la conception</h2>
+<p>L'application fonctionne entièrement hors ligne et n'envoie rien nulle part. Les analyseurs de fichiers s'exécutent
+  dans des processus distincts, sans accès réseau, et ne peuvent écrire que dans leurs propres dossiers temporaires.
+  Elle a été testée avec des fichiers volontairement malformés et malveillants. Les résultats sont des observations à
+  examiner, non des conclusions juridiques ou d'expert.</p>
+
+<h2>Documentation</h2>
+<ul>
+  <li><a href="install.html" data-keep-lang>Guide d'installation</a> — y compris l'étape unique « Ouvrir quand même » au premier lancement</li>
+  <li><a href="guide.html" data-keep-lang>Guide d'utilisation</a></li>
+  <li><a href="https://github.com/ITriskMgr/MetadataWorkbench/releases">Toutes les versions</a></li>
+</ul>
+
+<h2>Licence</h2>
+<p>Gratuit, tel quel, sans garantie. Il est interdit de redistribuer ou de modifier l'application — partagez plutôt cette
+  page. Les composants tiers conservent leurs propres licences.
+  <a href="https://github.com/ITriskMgr/MetadataWorkbench/blob/main/LICENSE.txt">Licence complète</a>.</p>
+</div>
+</main>
+
+<footer><div class="bar">
+  <span>© 2026 Marc-André Léger · <a href="/">leger.ca</a></span>
+  <span><a href="https://github.com/ITriskMgr/MetadataWorkbench">GitHub</a></span>
+</div></footer>
+</body>
+</html>

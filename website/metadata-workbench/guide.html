@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metadata Workbench user guide</title>
+<meta name="title-en" content="Metadata Workbench user guide">
+<meta name="title-fr" content="Guide d'utilisation de Metadata Workbench">
+<meta name="description" content="How to use Metadata Workbench: projects, inspection, findings, editing, integrity and version reports. / Comment utiliser Metadata Workbench.">
+<link rel="stylesheet" href="mw.css">
+<script src="mw.js"></script>
+</head>
+<body>
+<header class="top"><div class="bar">
+  <a class="home" href="/">Marc-André Léger</a>
+  <nav>
+    <a href="./" data-keep-lang><span data-lang="en">Overview</span><span data-lang="fr">Aperçu</span></a>
+    <a href="install.html" data-keep-lang><span data-lang="en">Install</span><span data-lang="fr">Installation</span></a>
+    <a href="guide.html" aria-current="page" data-keep-lang><span data-lang="en">User guide</span><span data-lang="fr">Guide d'utilisation</span></a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language / Langue">
+    <button type="button" data-set="fr" aria-pressed="false">FR</button><button type="button" data-set="en" aria-pressed="true">EN</button>
+  </div>
+</div></header>
+
+<main>
+<div data-lang="en">
+<h1>User guide</h1>
+<p class="small">Metadata Workbench 0.5.0 · <a href="MetadataWorkbench-UserGuide-EN-FR.pdf">PDF (English and French)</a></p>
+<ul class="toc">
+  <li><a href="#en-idea">The main idea</a></li>
+  <li><a href="#en-project">1. Create a project</a></li>
+  <li><a href="#en-add">2. Add files</a></li>
+  <li><a href="#en-meta">3. Read the metadata</a></li>
+  <li><a href="#en-structure">4. Structure and hex views</a></li>
+  <li><a href="#en-findings">5. Findings and timeline</a></li>
+  <li><a href="#en-edit">6. Clean or edit a file</a></li>
+  <li><a href="#en-export">7. Export the edited copy</a></li>
+  <li><a href="#en-integrity">8. Integrity checks</a></li>
+  <li><a href="#en-compare">9. Compare versions</a></li>
+  <li><a href="#en-reports">10. Reports and audit log</a></li>
+  <li><a href="#en-limits">11. What results do not prove</a></li>
+</ul>
+
+<h2 id="en-idea">The main idea</h2>
+<p>Metadata Workbench never works on your original files. When you add a file, it is copied into a <em>project</em>,
+  the copy is verified by its SHA-256 fingerprint and made read-only, and everything you look at or change is based on
+  that copy. Every edit produces a <strong>new file</strong>, checked before it is kept. Your original stays exactly as it
+  was; delete or replace it yourself if you want to.</p>
+
+<h2 id="en-project">1. Create a project</h2>
+<ol class="steps">
+  <li>Click <strong>New Project…</strong> in the toolbar. Give it a name (for example a case or a batch of documents to
+    clean).</li>
+  <li>Choose where to create the project folder (the default location is fine). The project opens immediately.</li>
+  <li>Reopen a project later with <strong>Open Project…</strong> (<span class="kbd">⌘O</span>).</li>
+</ol>
+
+<h2 id="en-add">2. Add files</h2>
+<p>Click <strong>Add Files…</strong> or <strong>Add Folder…</strong> (folders: <em>recursive</em> or <em>top level
+  only</em>). Each selected item gets a row, including those that are refused (links, devices, missing or very large
+  files) with the reason.</p>
+<p>Before adding, you can tick <strong>Deep inspection</strong> to also capture the text of Office comments, which may
+  contain personal data. The <strong>Policy</strong> menu chooses <em>standard</em> (normal) or <em>strict</em> (refuse
+  to analyse if parser isolation is not fully available).</p>
+<p>The <strong>Overview</strong> tab shows the file's fingerprints, its state and where its working copy is
+  (<strong>Integrity ▾ ▸ Open the project's working folder</strong> opens it in the Finder).</p>
+<div class="warn"><strong>State “unstable”</strong> means the file changed while it was being read — typically a file
+  still downloading from iCloud or OneDrive, or still being saved. It is not used for viewing or editing. Wait until the
+  file is complete and local, then add it again.</div>
+
+<h2 id="en-meta">3. Read the metadata</h2>
+<figure><img src="img/metadata.png" width="1233" height="846" loading="lazy" alt="Metadata tab"></figure>
+<p>The <strong>Metadata</strong> tab lists every value found, without merging duplicates. Useful columns:</p>
+<table>
+  <tr><th>Column</th><th>Meaning</th></tr>
+  <tr><td>Layer</td><td><em>filesystem</em> (about the path: dates, size), <em>embedded</em> (inside the file),
+    <em>derived</em> (computed, such as fingerprints)</td></tr>
+  <tr><td>Namespace</td><td>where the value lives, for example <code>EXIF:IFD0</code>, <code>XMP:XMP-dc</code>,
+    <code>PDF</code>. The same description can exist in EXIF, XMP and IPTC at once.</td></tr>
+  <tr><td>Status</td><td><em>present</em>, <em>missing</em>, <em>unsupported</em>… An empty value is not the same as an
+    absent one.</td></tr>
+  <tr><td>Privacy hint</td><td>a review category: location, device identifier, person or rights holder, contact,
+    internal path, free text. It is a hint, not a determination.</td></tr>
+</table>
+<p>Select a row and press <strong>Locate value in Hex</strong> to find it in the bytes of the file. Not finding it does
+  not mean it is absent: many values are displayed in converted form (GPS degrees, dates).</p>
+
+<h2 id="en-structure">4. Structure and hex views</h2>
+<p><strong>Structure</strong> shows where things are inside the file. Choose a parser at the top:</p>
+<ul>
+  <li><strong>ooxml</strong> (Word, Excel, PowerPoint): properties, relationships (a template path often reveals a user
+    name and folder), comments, tracked changes by author, macros, embedded objects.</li>
+  <li><strong>pdfscan</strong>: number of revisions, values replaced by later revisions, signatures, JavaScript,
+    automatic actions, attachments.</li>
+  <li><strong>archive</strong>: every member of a ZIP or TAR, with unsafe names and nested archives. Nothing is
+    extracted.</li>
+  <li><strong>ffprobe</strong> (audio/video, needs ffmpeg): container and per-stream tags.</li>
+</ul>
+<p><strong>Hex</strong> shows the working copy 4 KiB at a time. Jump to an <em>Offset</em> (decimal or <code>0x…</code>)
+  or <em>Find</em> text or byte patterns such as <code>FF D8 FF</code>.</p>
+
+<h2 id="en-findings">5. Findings and timeline</h2>
+<figure><img src="img/findings.png" width="1233" height="846" loading="lazy" alt="Findings tab"></figure>
+<p><strong>Findings</strong> are observations for review, never verdicts. Examples: modification earlier than creation
+  (AN-02), dates in the future (AN-03), conflicting values or PDF values changed between revisions (AN-04),
+  privacy-relevant fields (AN-05), signatures present (AN-08), file changed during acquisition (AN-09), active content
+  such as macros, PDF JavaScript or remote templates (AN-11).</p>
+<p>Select a finding to see its explanation, other possible explanations and suggested follow-up. Record your decision
+  with <em>Accept</em>, <em>Dismiss</em>, <em>Needs review</em> or <em>Comment…</em>; each entry keeps your name and the
+  time and is never overwritten.</p>
+<p><strong>Timeline</strong> places dates on a common scale. Dates without a time zone stay “unanchored” unless you
+  choose a zone assumption; you can also enter a camera clock offset. The assumptions in force are always stated, and
+  the original values are never changed.</p>
+
+<h2 id="en-edit">6. Clean or edit a file</h2>
+<figure><img src="img/edit.png" width="1233" height="846" loading="lazy" alt="Edit tab with the public-sharing preset"></figure>
+<ol class="steps">
+  <li>Select a file and open the <strong>Edit</strong> tab. If the format cannot be edited, the tab says why.</li>
+  <li>Choose an action for each field (<em>set to…</em>, <em>remove</em>, <em>remove all GPS</em>, <em>round GPS…</em>),
+    or load a <strong>preset</strong>:
+    <ul>
+      <li><em>Remove location</em> — GPS and place names;</li>
+      <li><em>Public sharing</em> — location, device serial numbers, maker notes, embedded thumbnails (which can show
+        the uncropped original), editing history and comments; keeps title, description, author and copyright;</li>
+      <li><em>Remove organisation / author details</em>;</li>
+      <li><em>Remove all metadata</em> — keeps the colour profile and orientation so the picture looks the same.</li>
+    </ul></li>
+  <li>Press <strong>Review plan</strong>. It lists every place that will change, current value → new value. Nothing is
+    written yet.</li>
+  <li>Press <strong>Confirm and create edited copy</strong>. The new copy is re-read: each change is checked, any other
+    change made by the writing tool is listed, and the content (picture, pages, sound, document text) is proven
+    unchanged. Only then is it saved, shown as <code>↳ name (edited 1).ext</code> under its source. If a check fails,
+    nothing is marked successful.</li>
+</ol>
+<h3>Good to know</h3>
+<ul>
+  <li><strong>GPS</strong> can only be removed or rounded, never typed in.</li>
+  <li><strong>Office documents</strong>: you can also remove comments or accept/reject all tracked changes. These change
+    what the document shows, so you must tick an extra acknowledgement. Macro-enabled files need explicit permission;
+    their macros are kept unchanged.</li>
+  <li><strong>PDF</strong>: the copy is fully rewritten, so values that survived only in earlier revisions are gone too.
+    You can remove JavaScript and automatic actions, attachments or review annotations. Visible text redaction is not
+    offered.</li>
+  <li><strong>Camera RAW</strong>: DNG can be edited directly. For proprietary formats (CR3, NEF, ARW, RAF…), select a file
+    from that camera and press <strong>Validate RAW model…</strong> once: a test edit is checked, and if it passes,
+    editing is enabled for that camera model.</li>
+  <li><strong>Signed files</strong> and files with content credentials (C2PA) cannot be edited: it would break the
+    signature.</li>
+  <li><strong>Hex ▸ Edit bytes…</strong> replaces bytes at an offset in a new copy, after a clear warning; the check proves
+    that only those bytes changed.</li>
+  <li>To “undo”, make a new copy from the original. Nothing is ever rewritten in place.</li>
+</ul>
+
+<h2 id="en-export">7. Export the edited copy</h2>
+<p>Edited copies live inside the project. Select one and choose <strong>Export copy…</strong> to save it wherever you
+  want; existing files are never overwritten. Options:</p>
+<ul>
+  <li><strong>Write checksum files</strong> next to the copy (<code>.sha256</code>, <code>.md5</code>…). Check them later
+    with <code>shasum -a 256 -c name.sha256</code>.</li>
+  <li><strong>Update a checksum manifest</strong> that listed the original (sha256sum, BSD or BagIt format): its line
+    gets the new fingerprint and a dated backup of the manifest is kept.</li>
+</ul>
+<div class="note">Editing metadata changes the file's bytes, so its MD5/SHA fingerprints always change — that is normal.
+  What stays identical is the content, and each edit records that proof. File dates are never backdated, and a
+  signature made for the original must be redone by its signer.</div>
+
+<h2 id="en-integrity">8. Integrity checks</h2>
+<p>When you select a file, the app checks in the background that the working copy still matches its fingerprint, that
+  the original (if still reachable) has not changed, and that any checksum files or registered manifests agree. The
+  result appears at the top of the Overview. Use <strong>Integrity ▾</strong> to <em>Verify selected file</em>, <em>Verify
+  all files</em>, register <em>Checksum manifests…</em> or turn the automatic check off.</p>
+
+<h2 id="en-compare">9. Compare versions</h2>
+<figure><img src="img/compare.png" width="1233" height="846" loading="lazy" alt="Version report"></figure>
+<p>In <strong>Compare</strong>, choose files A and B. <em>Compare</em> lists the fields that differ. <strong>Version
+  report</strong> goes further: fingerprints and size, changed byte ranges and the structure they belong to, metadata
+  added, removed or changed, and whether the content itself changed. The verdict is <em>identical</em>, <em>metadata
+  only</em>, <em>content changed</em> or <em>different files</em>. <em>Versions of A</em> lists the other versions of a
+  file; <em>Save report…</em> writes HTML or JSON. <em>Correlate project…</em> suggests leads across all files (identical
+  files, shared device identifiers, author name variants, close times or places).</p>
+
+<h2 id="en-reports">10. Reports and audit log</h2>
+<p>The <strong>Export ▾</strong> menu produces JSON, CSV (one value per row, protected against spreadsheet formulas) or a
+  self-contained HTML report, plus <em>redacted</em> versions that remove privacy-relevant values and paths. Every action
+  is recorded in an append-only, chained audit log.</p>
+
+<h2 id="en-limits">11. What results do not prove</h2>
+<ul>
+  <li>An author field is a declared string, not a verified identity.</li>
+  <li>A software name is a processing clue, not evidence of manipulation.</li>
+  <li>Missing GPS or author fields are not evidence of deliberate removal.</li>
+  <li>Matching fingerprints prove identical bytes only.</li>
+  <li>A privacy clean-up report says what was found, removed and verified, and what was <em>not</em> examined (visible
+    content, file names, other copies). It never claims that all private information was removed.</li>
+  <li>A verified copy and its audit log document a process; on their own they do not establish admissibility or chain of
+    custody before collection.</li>
+</ul>
+</div>
+
+<div data-lang="fr">
+<h1>Guide d'utilisation</h1>
+<p class="small">Metadata Workbench 0.5.0 · <a href="MetadataWorkbench-UserGuide-EN-FR.pdf">PDF (français et anglais)</a> · L'interface de l'application est en anglais; les libellés sont donc
+  indiqués en anglais.</p>
+<ul class="toc">
+  <li><a href="#fr-idea">Le principe</a></li>
+  <li><a href="#fr-project">1. Créer un projet</a></li>
+  <li><a href="#fr-add">2. Ajouter des fichiers</a></li>
+  <li><a href="#fr-meta">3. Lire les métadonnées</a></li>
+  <li><a href="#fr-structure">4. Vues Structure et Hex</a></li>
+  <li><a href="#fr-findings">5. Constats et chronologie</a></li>
+  <li><a href="#fr-edit">6. Nettoyer ou éditer un fichier</a></li>
+  <li><a href="#fr-export">7. Exporter la copie modifiée</a></li>
+  <li><a href="#fr-integrity">8. Vérifications d'intégrité</a></li>
+  <li><a href="#fr-compare">9. Comparer des versions</a></li>
+  <li><a href="#fr-reports">10. Rapports et journal d'audit</a></li>
+  <li><a href="#fr-limits">11. Ce que les résultats ne prouvent pas</a></li>
+</ul>
+
+<h2 id="fr-idea">Le principe</h2>
+<p>Metadata Workbench ne travaille jamais sur vos fichiers originaux. Quand vous ajoutez un fichier, il est copié dans
+  un <em>projet</em>; la copie est vérifiée par son empreinte SHA-256 et mise en lecture seule, et tout ce que vous
+  consultez ou modifiez repose sur cette copie. Chaque modification produit un <strong>nouveau fichier</strong>, vérifié
+  avant d'être conservé. Votre original reste exactement tel quel; supprimez-le ou remplacez-le vous-même au besoin.</p>
+
+<h2 id="fr-project">1. Créer un projet</h2>
+<ol class="steps">
+  <li>Cliquez sur <strong>New Project…</strong> dans la barre d'outils. Donnez-lui un nom (par exemple un dossier
+    d'enquête ou un lot de documents à nettoyer).</li>
+  <li>Choisissez où créer le dossier du projet (l'emplacement par défaut convient). Le projet s'ouvre aussitôt.</li>
+  <li>Rouvrez un projet plus tard avec <strong>Open Project…</strong> (<span class="kbd">⌘O</span>).</li>
+</ol>
+
+<h2 id="fr-add">2. Ajouter des fichiers</h2>
+<p>Cliquez sur <strong>Add Files…</strong> ou <strong>Add Folder…</strong> (dossiers : <em>recursive</em> ou <em>top
+  level only</em>). Chaque élément sélectionné obtient une ligne, y compris ceux qui sont refusés (liens, périphériques,
+  fichiers absents ou très volumineux), avec la raison.</p>
+<p>Avant l'ajout, cochez <strong>Deep inspection</strong> pour saisir aussi le texte des commentaires Office, qui peut
+  contenir des renseignements personnels. Le menu <strong>Policy</strong> permet de choisir <em>standard</em> (normal)
+  ou <em>strict</em> (refuser l'analyse si l'isolement des analyseurs n'est pas entièrement disponible).</p>
+<p>L'onglet <strong>Overview</strong> affiche les empreintes du fichier, son état et l'emplacement de sa copie de travail
+  (<strong>Integrity ▾ ▸ Open the project's working folder</strong> l'ouvre dans le Finder).</p>
+<div class="warn"><strong>L'état « unstable » (instable)</strong> signifie que le fichier a changé pendant sa lecture —
+  typiquement un fichier encore en téléchargement depuis iCloud ou OneDrive, ou en cours d'enregistrement. Il n'est pas
+  utilisé pour la consultation ni l'édition. Attendez que le fichier soit complet et local, puis ajoutez-le de
+  nouveau.</div>
+
+<h2 id="fr-meta">3. Lire les métadonnées</h2>
+<figure><img src="img/metadata.png" width="1233" height="846" loading="lazy" alt="Onglet Metadata"></figure>
+<p>L'onglet <strong>Metadata</strong> énumère chaque valeur trouvée, sans fusionner les doublons. Colonnes utiles :</p>
+<table>
+  <tr><th>Colonne</th><th>Signification</th></tr>
+  <tr><td>Layer</td><td><em>filesystem</em> (le chemin : dates, taille), <em>embedded</em> (dans le fichier),
+    <em>derived</em> (calculé, comme les empreintes)</td></tr>
+  <tr><td>Namespace</td><td>où se trouve la valeur, par exemple <code>EXIF:IFD0</code>, <code>XMP:XMP-dc</code>,
+    <code>PDF</code>. Une même description peut exister à la fois en EXIF, XMP et IPTC.</td></tr>
+  <tr><td>Status</td><td><em>present</em>, <em>missing</em>, <em>unsupported</em>… Une valeur vide n'est pas une valeur
+    absente.</td></tr>
+  <tr><td>Privacy hint</td><td>une catégorie à examiner : localisation, identifiant d'appareil, personne ou titulaire de
+    droits, coordonnées, chemin interne, texte libre. C'est un indice, pas une conclusion.</td></tr>
+</table>
+<p>Sélectionnez une ligne et cliquez sur <strong>Locate value in Hex</strong> pour la trouver dans les octets du
+  fichier. Ne pas la trouver ne veut pas dire qu'elle est absente : bien des valeurs sont affichées sous forme convertie
+  (degrés GPS, dates).</p>
+
+<h2 id="fr-structure">4. Vues Structure et Hex</h2>
+<p><strong>Structure</strong> montre où se trouvent les éléments dans le fichier. Choisissez un analyseur en haut :</p>
+<ul>
+  <li><strong>ooxml</strong> (Word, Excel, PowerPoint) : propriétés, relations (un chemin de modèle révèle souvent un nom
+    d'utilisateur et un dossier), commentaires, modifications suivies par auteur, macros, objets incorporés.</li>
+  <li><strong>pdfscan</strong> : nombre de révisions, valeurs remplacées par des révisions ultérieures, signatures,
+    JavaScript, actions automatiques, pièces jointes.</li>
+  <li><strong>archive</strong> : chaque membre d'un ZIP ou d'un TAR, avec les noms dangereux et les archives imbriquées.
+    Rien n'est extrait.</li>
+  <li><strong>ffprobe</strong> (audio/vidéo, nécessite ffmpeg) : balises du conteneur et de chaque flux.</li>
+</ul>
+<p><strong>Hex</strong> affiche la copie de travail par tranches de 4 Kio. Allez à un <em>Offset</em> (décimal ou
+  <code>0x…</code>) ou utilisez <em>Find</em> pour du texte ou des motifs d'octets comme <code>FF D8 FF</code>.</p>
+
+<h2 id="fr-findings">5. Constats et chronologie</h2>
+<figure><img src="img/findings.png" width="1233" height="846" loading="lazy" alt="Onglet Findings"></figure>
+<p>Les <strong>Findings</strong> (constats) sont des observations à examiner, jamais des verdicts. Exemples :
+  modification antérieure à la création (AN-02), dates dans le futur (AN-03), valeurs contradictoires ou valeurs PDF
+  changées entre révisions (AN-04), champs touchant la vie privée (AN-05), signatures présentes (AN-08), fichier modifié
+  pendant l'acquisition (AN-09), contenu actif comme des macros, du JavaScript PDF ou des modèles distants (AN-11).</p>
+<p>Sélectionnez un constat pour voir son explication, les autres explications possibles et le suivi suggéré. Consignez
+  votre décision avec <em>Accept</em>, <em>Dismiss</em>, <em>Needs review</em> ou <em>Comment…</em>; chaque entrée garde
+  votre nom et l'heure et n'est jamais écrasée.</p>
+<p><strong>Timeline</strong> place les dates sur une échelle commune. Les dates sans fuseau horaire restent « non
+  ancrées » à moins que vous ne choisissiez une hypothèse de fuseau; vous pouvez aussi saisir un décalage d'horloge
+  d'appareil photo. Les hypothèses en vigueur sont toujours indiquées et les valeurs d'origine ne sont jamais
+  modifiées.</p>
+
+<h2 id="fr-edit">6. Nettoyer ou éditer un fichier</h2>
+<figure><img src="img/edit.png" width="1233" height="846" loading="lazy" alt="Onglet Edit avec le préréglage de partage public"></figure>
+<ol class="steps">
+  <li>Sélectionnez un fichier et ouvrez l'onglet <strong>Edit</strong>. Si le format ne peut pas être édité, l'onglet
+    indique pourquoi.</li>
+  <li>Choisissez une action pour chaque champ (<em>set to…</em>, <em>remove</em>, <em>remove all GPS</em>, <em>round
+    GPS…</em>) ou chargez un <strong>préréglage</strong> (preset) :
+    <ul>
+      <li><em>Remove location</em> — GPS et noms de lieux;</li>
+      <li><em>Public sharing</em> — localisation, numéros de série d'appareils, notes du fabricant, vignettes
+        incorporées (qui peuvent montrer l'original non recadré), historique d'édition et commentaires; conserve le
+        titre, la description, l'auteur et le droit d'auteur;</li>
+      <li><em>Remove organisation / author details</em>;</li>
+      <li><em>Remove all metadata</em> — conserve le profil de couleur et l'orientation pour que l'image reste
+        identique.</li>
+    </ul></li>
+  <li>Cliquez sur <strong>Review plan</strong>. Le plan énumère chaque endroit qui changera, valeur actuelle → nouvelle
+    valeur. Rien n'est encore écrit.</li>
+  <li>Cliquez sur <strong>Confirm and create edited copy</strong>. La nouvelle copie est relue : chaque modification est
+    vérifiée, toute autre modification faite par l'outil d'écriture est signalée, et le contenu (image, pages, son, texte
+    du document) est démontré inchangé. Ce n'est qu'ensuite qu'elle est enregistrée, sous la forme
+    <code>↳ nom (edited 1).ext</code> sous sa source. Si une vérification échoue, rien n'est marqué comme réussi.</li>
+</ol>
+<h3>Bon à savoir</h3>
+<ul>
+  <li>Le <strong>GPS</strong> peut seulement être retiré ou arrondi, jamais saisi.</li>
+  <li><strong>Documents Office</strong> : vous pouvez aussi retirer les commentaires ou accepter/rejeter toutes les
+    modifications suivies. Ces opérations changent ce que le document affiche; il faut donc cocher une confirmation
+    supplémentaire. Les fichiers avec macros exigent une permission explicite; leurs macros sont conservées telles
+    quelles.</li>
+  <li><strong>PDF</strong> : la copie est entièrement réécrite, de sorte que les valeurs qui ne subsistaient que dans des
+    révisions antérieures disparaissent aussi. Vous pouvez retirer le JavaScript et les actions automatiques, les pièces
+    jointes ou les annotations de révision. Le caviardage du texte visible n'est pas offert.</li>
+  <li><strong>RAW d'appareil photo</strong> : le DNG s'édite directement. Pour les formats propriétaires (CR3, NEF, ARW,
+    RAF…), sélectionnez un fichier de cet appareil et cliquez une fois sur <strong>Validate RAW model…</strong> : une
+    édition d'essai est vérifiée et, si elle réussit, l'édition est activée pour ce modèle d'appareil.</li>
+  <li>Les <strong>fichiers signés</strong> et ceux qui portent des attestations de contenu (C2PA) ne peuvent pas être
+    édités : cela briserait la signature.</li>
+  <li><strong>Hex ▸ Edit bytes…</strong> remplace des octets à une position donnée dans une nouvelle copie, après un
+    avertissement clair; la vérification démontre que seuls ces octets ont changé.</li>
+  <li>Pour « annuler », créez une nouvelle copie à partir de l'original. Rien n'est jamais réécrit sur place.</li>
+</ul>
+
+<h2 id="fr-export">7. Exporter la copie modifiée</h2>
+<p>Les copies modifiées restent dans le projet. Sélectionnez-en une et choisissez <strong>Export copy…</strong> pour
+  l'enregistrer où vous voulez; les fichiers existants ne sont jamais écrasés. Options :</p>
+<ul>
+  <li><strong>Écrire des fichiers de sommes de contrôle</strong> à côté de la copie (<code>.sha256</code>,
+    <code>.md5</code>…). Vérifiez-les plus tard avec <code>shasum -a 256 -c nom.sha256</code>.</li>
+  <li><strong>Mettre à jour un manifeste</strong> qui énumérait l'original (format sha256sum, BSD ou BagIt) : sa ligne
+    reçoit la nouvelle empreinte et une sauvegarde datée du manifeste est conservée.</li>
+</ul>
+<div class="note">Éditer des métadonnées change les octets du fichier; ses empreintes MD5/SHA changent donc toujours —
+  c'est normal. Ce qui reste identique, c'est le contenu, et chaque modification consigne cette preuve. Les dates des
+  fichiers ne sont jamais antidatées, et une signature faite pour l'original doit être refaite par son signataire.</div>
+
+<h2 id="fr-integrity">8. Vérifications d'intégrité</h2>
+<p>Quand vous sélectionnez un fichier, l'application vérifie en arrière-plan que la copie de travail correspond toujours
+  à son empreinte, que l'original (s'il est encore accessible) n'a pas changé et que les fichiers de sommes de contrôle
+  ou les manifestes enregistrés concordent. Le résultat s'affiche en haut de l'Overview. Utilisez <strong>Integrity
+  ▾</strong> pour <em>Verify selected file</em>, <em>Verify all files</em>, enregistrer des <em>Checksum manifests…</em>
+  ou désactiver la vérification automatique.</p>
+
+<h2 id="fr-compare">9. Comparer des versions</h2>
+<figure><img src="img/compare.png" width="1233" height="846" loading="lazy" alt="Rapport de versions"></figure>
+<p>Dans <strong>Compare</strong>, choisissez les fichiers A et B. <em>Compare</em> énumère les champs qui diffèrent.
+  <strong>Version report</strong> va plus loin : empreintes et taille, plages d'octets modifiées et la structure à
+  laquelle elles appartiennent, métadonnées ajoutées, retirées ou modifiées, et changement éventuel du contenu lui-même.
+  Le verdict est <em>identical</em>, <em>metadata only</em>, <em>content changed</em> ou <em>different files</em>.
+  <em>Versions of A</em> énumère les autres versions d'un fichier; <em>Save report…</em> enregistre en HTML ou JSON.
+  <em>Correlate project…</em> suggère des pistes parmi tous les fichiers (fichiers identiques, identifiants d'appareil
+  communs, variantes de noms d'auteur, heures ou lieux rapprochés).</p>
+
+<h2 id="fr-reports">10. Rapports et journal d'audit</h2>
+<p>Le menu <strong>Export ▾</strong> produit du JSON, du CSV (une valeur par ligne, protégé contre les formules de
+  tableur) ou un rapport HTML autonome, ainsi que des versions <em>caviardées</em> (redacted) qui retirent les valeurs
+  touchant la vie privée et les chemins. Chaque action est consignée dans un journal d'audit chaîné, en ajout
+  seulement.</p>
+
+<h2 id="fr-limits">11. Ce que les résultats ne prouvent pas</h2>
+<ul>
+  <li>Un champ auteur est une chaîne déclarée, pas une identité vérifiée.</li>
+  <li>Un nom de logiciel est un indice de traitement, pas une preuve de manipulation.</li>
+  <li>L'absence de GPS ou d'auteur ne prouve pas un retrait délibéré.</li>
+  <li>Des empreintes identiques ne prouvent que l'identité des octets.</li>
+  <li>Un rapport de nettoyage indique ce qui a été trouvé, retiré et vérifié, et ce qui n'a <em>pas</em> été examiné
+    (contenu visible, noms de fichiers, autres copies). Il n'affirme jamais que tous les renseignements personnels ont
+    été retirés.</li>
+  <li>Une copie vérifiée et son journal d'audit documentent un processus; à eux seuls, ils n'établissent ni
+    l'admissibilité ni la chaîne de possession antérieure à la collecte.</li>
+</ul>
+</div>
+</main>
+
+<footer><div class="bar">
+  <span>© 2026 Marc-André Léger · <a href="/">leger.ca</a></span>
+  <span><a href="https://github.com/ITriskMgr/MetadataWorkbench">GitHub</a></span>
+</div></footer>
+</body>
+</html>
